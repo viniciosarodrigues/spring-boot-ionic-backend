@@ -30,5 +30,4 @@ public class PedidoResource {
 		Pedido pedidoEncontrada = pedidoService.findById(id);
 		return ResponseEntity.status(HttpStatus.OK).body(pedidoEncontrada);
 	}
-
 }
