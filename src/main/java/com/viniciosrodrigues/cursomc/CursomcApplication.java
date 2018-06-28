@@ -64,11 +64,13 @@ public class CursomcApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// Cria as categorias
-		Categoria catUm = new Categoria();
-		catUm.setNome("Informática");
-
-		Categoria catDois = new Categoria();
-		catDois.setNome("Escritório");
+		Categoria catUm = new Categoria(null, "Informática");
+		Categoria catDois = new Categoria(null, "Escritório");
+		Categoria catTres = new Categoria(null, "Cama, mesa e banho");
+		Categoria catQuatro = new Categoria(null, "Eletrônicos");
+		Categoria catCinco = new Categoria(null, "Jardinagem");
+		Categoria catSeis = new Categoria(null, "Decoração");
+		Categoria catSete = new Categoria(null, "Perfumaria");
 
 		// Cria os produtos
 		Produto produtoUm = new Produto(null, "Computador", 2000D);
@@ -85,7 +87,7 @@ public class CursomcApplication implements CommandLineRunner {
 		produtoTres.getCategorias().addAll(Arrays.asList(catUm));
 
 		// Salva Categorias e Produtos na base de dados
-		categoriaRepository.saveAll(Arrays.asList(catUm, catDois));
+		categoriaRepository.saveAll(Arrays.asList(catUm, catDois, catTres, catQuatro, catCinco, catSeis, catSete));
 		produtoRepository.saveAll(Arrays.asList(produtoUm, produtoDois, produtoTres));
 
 		// Cria os Estados
