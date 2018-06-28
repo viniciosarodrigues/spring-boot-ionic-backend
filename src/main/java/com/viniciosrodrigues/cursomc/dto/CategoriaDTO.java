@@ -2,6 +2,10 @@ package com.viniciosrodrigues.cursomc.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+
 import com.viniciosrodrigues.cursomc.domain.Categoria;
 
 public class CategoriaDTO implements Serializable {
@@ -10,6 +14,9 @@ public class CategoriaDTO implements Serializable {
 
 	private Long id;
 
+	@NotEmpty(message = "O nome não pode ser vazio.")
+	@Min(value = 5, message = "O deve ter entre 5 a 80 caracteres.")
+	@Max(value = 50, message = "O deve ter entre 5 a 80 caracteres.")
 	private String nome;
 
 	public CategoriaDTO() {
