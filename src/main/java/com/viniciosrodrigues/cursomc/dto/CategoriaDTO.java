@@ -15,8 +15,8 @@ public class CategoriaDTO implements Serializable {
 	private Long id;
 
 	@NotEmpty(message = "O nome não pode ser vazio.")
-	@Min(value = 5, message = "O deve ter entre 5 a 80 caracteres.")
-	@Max(value = 50, message = "O deve ter entre 5 a 80 caracteres.")
+	@Min(value = 5, message = "O nome deve ter entre 5 a 80 caracteres.")
+	@Max(value = 50, message = "O nome deve ter entre 5 a 80 caracteres.")
 	private String nome;
 
 	public CategoriaDTO() {
