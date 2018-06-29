@@ -3,10 +3,17 @@ package com.viniciosrodrigues.cursomc.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.viniciosrodrigues.cursomc.domain.Cliente;
+import com.viniciosrodrigues.cursomc.dto.ClienteDTO;
+import com.viniciosrodrigues.cursomc.exception.DataIntegrityException;
 import com.viniciosrodrigues.cursomc.exception.ObjectNotFoundException;
 import com.viniciosrodrigues.cursomc.repository.ClienteRepository;
 
@@ -27,4 +34,26 @@ public class ClienteService {
 
 	}
 
+	public Cliente update(Cliente obj) {
+		Cliente cliente = findById(obj.getId());
+		BeanUtils.copyProperties(cliente, obj, "id", "nome", "email");
+		return clienteRepository.save(obj);
+	}
+
+	public void delete(Long id) {
+		try {
+			clienteRepository.deleteById(findById(id).getId());
+		} catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possível excluir pois há entidades relacionadas");
+		}
+	}
+
+	public Page<Cliente> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return clienteRepository.findAll(pageRequest);
+	}
+
+	public Cliente fromDTO(ClienteDTO obj) {
+		return new Cliente(obj.getId(), obj.getNome(), obj.getEmail(), null, null);
+	}
 }
