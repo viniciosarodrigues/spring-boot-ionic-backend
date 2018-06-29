@@ -2,20 +2,34 @@ package com.viniciosrodrigues.cursomc.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 public class ClienteNewDTO implements Serializable {
 
 	private static final long serialVersionUID = 6151574439970627716L;
+
+	@NotEmpty(message = "O nome é obrigatório")
+	@Size(min = 5, max = 120, message = "O tamanho deve ser entre 5 e 120 caracteres")
 	private String nome;
+
+	@NotEmpty(message = "O nome é obrigatório")
+	@Email(message = "Email inválido")
 	private String email;
+	@NotEmpty(message = "O CPF ou CNPJ é obrigatório")
 	private String cpfOuCnpj;
 
 	private Integer tipo;
+	@NotEmpty(message = "O logradouro é obrigatório")
 	private String logradouro;
 	private String numero;
 	private String complemento;
+	@NotEmpty(message = "O bairro é obrigatório")
 	private String bairro;
+	@NotEmpty(message = "O CEP é obrigatório")
 	private String cep;
-
+	@NotEmpty(message = "O telefone principal é obrigatório")
 	private String telefoneUm;
 	private String telefoneDois;
 	private String telefoneTres;
