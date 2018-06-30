@@ -6,6 +6,9 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import com.viniciosrodrigues.cursomc.service.validation.ClienteInsert;
+
+@ClienteInsert	
 public class ClienteNewDTO implements Serializable {
 
 	private static final long serialVersionUID = 6151574439970627716L;
