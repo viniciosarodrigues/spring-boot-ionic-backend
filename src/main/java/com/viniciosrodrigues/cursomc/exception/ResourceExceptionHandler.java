@@ -25,6 +25,14 @@ public class ResourceExceptionHandler {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 	}
 
+	@ExceptionHandler(TipoClienteNaoEncontradoException.class)
+	public ResponseEntity<StandardError> tipoClienteNaoEncontradoException(TipoClienteNaoEncontradoException e,
+			HttpServletRequest req) {
+		StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(),
+				System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+	}
+
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<ValidationError> methodArgumentNotValidException(MethodArgumentNotValidException e,
 			HttpServletRequest req) {

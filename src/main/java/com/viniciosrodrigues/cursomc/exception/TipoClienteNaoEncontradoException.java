@@ -1,6 +1,6 @@
 package com.viniciosrodrigues.cursomc.exception;
 
-public class TipoClienteNaoEncontradoException extends Exception {
+public class TipoClienteNaoEncontradoException extends RuntimeException {
 
 	private static final long serialVersionUID = 6234072350527176435L;
 

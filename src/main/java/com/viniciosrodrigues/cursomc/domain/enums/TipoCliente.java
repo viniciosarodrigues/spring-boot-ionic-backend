@@ -1,5 +1,7 @@
 package com.viniciosrodrigues.cursomc.domain.enums;
 
+import com.viniciosrodrigues.cursomc.exception.TipoClienteNaoEncontradoException;
+
 public enum TipoCliente {
 	PESSOAFISICA(1, "Pessoa Física"), PESSOAJURIDICA(2, "Pessoa Jurídica");
 
@@ -28,6 +30,6 @@ public enum TipoCliente {
 				return x;
 
 		}
-		throw new IllegalArgumentException("Id do tipo Cliente inválido: " + id);
+		throw new TipoClienteNaoEncontradoException("O Tipo do Cliente com código '" + id + "' não existe");
 	}
 }
