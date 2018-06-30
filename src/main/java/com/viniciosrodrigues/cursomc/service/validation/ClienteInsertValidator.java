@@ -27,12 +27,17 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
 
 		validaEmailOuCgcCadastrado(value, list);
 
+		adicionaListaDeErrosNoContextoDeValidacao(context, list);
+		return list.isEmpty();
+	}
+
+	private void adicionaListaDeErrosNoContextoDeValidacao(ConstraintValidatorContext context,
+			List<FieldMessage> list) {
 		for (FieldMessage e : list) {
 			context.disableDefaultConstraintViolation();
 			context.buildConstraintViolationWithTemplate(e.getMessage()).addPropertyNode(e.getFieldName())
 					.addConstraintViolation();
 		}
-		return list.isEmpty();
 	}
 
 	private void validaEmailOuCgcCadastrado(ClienteNewDTO value, List<FieldMessage> list) {
@@ -53,5 +58,4 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
 		if (value.getTipo().equals(TipoCliente.PESSOAJURIDICA.getId()) && !BR.isValidCNPJ(value.getCpfOuCnpj()))
 			list.add(new FieldMessage("cpfOuCnpj", "CNPJ inválido"));
 	}
-
 }
