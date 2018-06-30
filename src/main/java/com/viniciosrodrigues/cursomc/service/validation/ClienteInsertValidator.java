@@ -23,20 +23,9 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
 	public boolean isValid(ClienteNewDTO value, ConstraintValidatorContext context) {
 		List<FieldMessage> list = new ArrayList<>();
 
-		if (value.getTipo() == null)
-			list.add(new FieldMessage("tipo", "Tipo não pode ser nulo"));
-		if (value.getTipo().equals(TipoCliente.PESSOAFISICA.getId()) && !BR.isValidCPF(value.getCpfOuCnpj()))
-			list.add(new FieldMessage("cpfOuCnpj", "CPF inválido"));
-		if (value.getTipo().equals(TipoCliente.PESSOAJURIDICA.getId()) && !BR.isValidCNPJ(value.getCpfOuCnpj()))
-			list.add(new FieldMessage("cpfOuCnpj", "CNPJ inválido"));
+		validaCpfOuCnpj(value, list);
 
-		if (clienteRepository.findByEmail(value.getEmail()) != null)
-			list.add(new FieldMessage("email", "Email já cadastrado"));
-		if (clienteRepository.findByCpfOuCnpj(value.getCpfOuCnpj()) != null)
-			if (value.getTipo().equals(TipoCliente.PESSOAFISICA.getId()))
-				list.add(new FieldMessage("cpfOuCnpj", "CPF já cadastrado"));
-			else
-				list.add(new FieldMessage("cpfOuCnpj", "CNPJ já cadastrado"));
+		validaEmailOuCgcCadastrado(value, list);
 
 		for (FieldMessage e : list) {
 			context.disableDefaultConstraintViolation();
@@ -44,6 +33,25 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
 					.addConstraintViolation();
 		}
 		return list.isEmpty();
+	}
+
+	private void validaEmailOuCgcCadastrado(ClienteNewDTO value, List<FieldMessage> list) {
+		if (clienteRepository.findByEmail(value.getEmail()) != null)
+			list.add(new FieldMessage("email", "Email já cadastrado"));
+		if (clienteRepository.findByCpfOuCnpj(value.getCpfOuCnpj()) != null)
+			if (value.getTipo().equals(TipoCliente.PESSOAFISICA.getId()))
+				list.add(new FieldMessage("cpfOuCnpj", "CPF já cadastrado"));
+			else
+				list.add(new FieldMessage("cpfOuCnpj", "CNPJ já cadastrado"));
+	}
+
+	private void validaCpfOuCnpj(ClienteNewDTO value, List<FieldMessage> list) {
+		if (value.getTipo() == null)
+			list.add(new FieldMessage("tipo", "Tipo não pode ser nulo"));
+		if (value.getTipo().equals(TipoCliente.PESSOAFISICA.getId()) && !BR.isValidCPF(value.getCpfOuCnpj()))
+			list.add(new FieldMessage("cpfOuCnpj", "CPF inválido"));
+		if (value.getTipo().equals(TipoCliente.PESSOAJURIDICA.getId()) && !BR.isValidCNPJ(value.getCpfOuCnpj()))
+			list.add(new FieldMessage("cpfOuCnpj", "CNPJ inválido"));
 	}
 
 }
