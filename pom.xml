@@ -2,11 +2,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<!-- Conexão fake com SVN -->
+	<scm>
+		<connection>scm:svn:http://127.0.0.1/fake</connection>
+		<developerConnection>scm:svn:https://127.0.0.1/fake</developerConnection>
+		<tag>HEAD</tag>
+		<url>http://127.0.0.1/fake</url>
+	</scm>
+
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.viniciosrodrigues.cursomc</groupId>
 	<artifactId>cursomc</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>${buildNumber}.0.0</version>
 	<packaging>jar</packaging>
 
 	<name>cursomc</name>
@@ -71,6 +80,32 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<!-- Auto-build Version -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<id>buildnumber</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<format>{0,number}</format>
+					<items>
+						<item>buildNumber</item>
+					</items>
+					<doCheck>false</doCheck>
+					<doUpdate>false</doUpdate>
+					<revisionOnScmFailure>unknownbuild</revisionOnScmFailure>
+				</configuration>
+			</plugin>
+
+
 		</plugins>
 	</build>
 
