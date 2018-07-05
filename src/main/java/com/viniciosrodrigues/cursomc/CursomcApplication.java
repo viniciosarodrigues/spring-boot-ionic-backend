@@ -76,19 +76,41 @@ public class CursomcApplication implements CommandLineRunner {
 		Produto produtoUm = new Produto(null, "Computador", 2000D);
 		Produto produtoDois = new Produto(null, "Impressora", 800D);
 		Produto produtoTres = new Produto(null, "Mouse", 80D);
+		Produto produtoQuatro = new Produto(null, "Mesa de Escritório", 300D);
+		Produto produtoCinco = new Produto(null, "Mesa de Escritório", 50D);
+		Produto produtoSeis = new Produto(null, "Mesa de Escritório", 200D);
+		Produto produtoSete = new Produto(null, "Mesa de Escritório", 120D);
+		Produto produtoOito = new Produto(null, "Mesa de Escritório", 800D);
+		Produto produtoNove = new Produto(null, "Mesa de Escritório", 100D);
+		Produto produtoDez = new Produto(null, "Mesa de Escritório", 180D);
+		Produto produtoOnze = new Produto(null, "Mesa de Escritório", 900D);
 
 		// Adiciona os produtos às categorias
 		catUm.getProdutos().addAll(Arrays.asList(produtoUm, produtoDois, produtoTres));
-		catDois.getProdutos().addAll(Arrays.asList(produtoDois));
+		catDois.getProdutos().addAll(Arrays.asList(produtoDois, produtoQuatro));
+		catTres.getProdutos().addAll(Arrays.asList(produtoCinco, produtoSeis));
+		catQuatro.getProdutos().addAll(Arrays.asList(produtoUm, produtoDois, produtoTres, produtoSete));
+		catCinco.getProdutos().add(produtoOito);
+		catSeis.getProdutos().addAll(Arrays.asList(produtoNove, produtoDez));
+		catSete.getProdutos().add(produtoOnze);
 
 		// Adiciona as categorias aos produtos
 		produtoUm.getCategorias().addAll(Arrays.asList(catUm));
 		produtoDois.getCategorias().addAll(Arrays.asList(catUm, catDois));
 		produtoTres.getCategorias().addAll(Arrays.asList(catUm));
+		produtoQuatro.getCategorias().addAll(Arrays.asList(catDois));
+		produtoCinco.getCategorias().addAll(Arrays.asList(catTres));
+		produtoSeis.getCategorias().addAll(Arrays.asList(catTres));
+		produtoSete.getCategorias().addAll(Arrays.asList(catQuatro));
+		produtoOito.getCategorias().addAll(Arrays.asList(catCinco));
+		produtoNove.getCategorias().addAll(Arrays.asList(catSeis));
+		produtoDez.getCategorias().addAll(Arrays.asList(catSeis));
+		produtoOnze.getCategorias().addAll(Arrays.asList(catSete));
 
 		// Salva Categorias e Produtos na base de dados
 		categoriaRepository.saveAll(Arrays.asList(catUm, catDois, catTres, catQuatro, catCinco, catSeis, catSete));
-		produtoRepository.saveAll(Arrays.asList(produtoUm, produtoDois, produtoTres));
+		produtoRepository.saveAll(Arrays.asList(produtoUm, produtoDois, produtoTres, produtoQuatro, produtoCinco,
+				produtoSeis, produtoSete, produtoOito, produtoNove, produtoDez, produtoOnze));
 
 		// Cria os Estados
 		Estado estadoUm = new Estado(null, "Pernambuco");
