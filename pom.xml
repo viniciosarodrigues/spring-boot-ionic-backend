@@ -104,8 +104,6 @@
 					<revisionOnScmFailure>unknownbuild</revisionOnScmFailure>
 				</configuration>
 			</plugin>
-
-
 		</plugins>
 	</build>
 

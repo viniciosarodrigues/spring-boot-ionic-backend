@@ -12,13 +12,18 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.viniciosrodrigues.cursomc.domain.enums.EstadoPagamento;
 
 @Entity
 @Table(name = "PAGAMENTO")
 @Inheritance(strategy = InheritanceType.JOINED)
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = As.PROPERTY, property = "@type")
+@JsonSubTypes({ @Type(value = PagamentoComBoleto.class, name = "pagamentoComBoleto"),
+		@Type(value = PagamentoComCartao.class, name = "pagamentoComCartao") })
 public abstract class Pagamento implements Serializable {
 
 	private static final long serialVersionUID = -2443688151287351597L;
