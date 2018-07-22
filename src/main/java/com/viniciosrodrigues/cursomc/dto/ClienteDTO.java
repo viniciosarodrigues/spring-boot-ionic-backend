@@ -24,6 +24,9 @@ public class ClienteDTO implements Serializable {
 	@Email(message = "Email inválido")
 	private String email;
 
+	@NotEmpty(message = "Você deve informar a senha")
+	private String senha;
+
 	public ClienteDTO() {
 		super();
 	}
@@ -33,6 +36,7 @@ public class ClienteDTO implements Serializable {
 		this.id = cliente.getId();
 		this.nome = cliente.getNome();
 		this.email = cliente.getEmail();
+		this.senha = cliente.getSenha();
 	}
 
 	public Long getId() {
@@ -57,6 +61,14 @@ public class ClienteDTO implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 }

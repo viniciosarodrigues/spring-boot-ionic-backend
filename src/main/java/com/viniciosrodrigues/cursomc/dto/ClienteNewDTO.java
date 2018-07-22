@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 
 import com.viniciosrodrigues.cursomc.service.validation.ClienteInsert;
 
-@ClienteInsert	
+@ClienteInsert
 public class ClienteNewDTO implements Serializable {
 
 	private static final long serialVersionUID = 6151574439970627716L;
@@ -20,6 +20,8 @@ public class ClienteNewDTO implements Serializable {
 	@NotEmpty(message = "O nome é obrigatório")
 	@Email(message = "Email inválido")
 	private String email;
+	@NotEmpty(message = "A senha é obrigatória")
+	private String senha;
 	@NotEmpty(message = "O CPF ou CNPJ é obrigatório")
 	private String cpfOuCnpj;
 
@@ -145,6 +147,14 @@ public class ClienteNewDTO implements Serializable {
 
 	public void setCidadeId(Long cidadeId) {
 		this.cidadeId = cidadeId;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 }

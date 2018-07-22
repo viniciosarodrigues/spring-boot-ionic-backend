@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.viniciosrodrigues.cursomc.domain.Categoria;
@@ -32,6 +33,9 @@ import com.viniciosrodrigues.cursomc.repository.ProdutoRepository;
 
 @Service
 public class DBService {
+
+	@Autowired
+	private BCryptPasswordEncoder pe;
 
 	@Autowired
 	private CategoriaRepository categoriaRepository;
@@ -125,7 +129,7 @@ public class DBService {
 
 		// Cria os Clientes e Endereços dos clientes
 		Cliente clienteUm = new Cliente(null, "Vinícios Rodrigues", "viniciosarodrigues@gmail.com", "08911768456",
-				TipoCliente.PESSOAFISICA);
+				TipoCliente.PESSOAFISICA, pe.encode("123"));
 		clienteUm.getTelefones().addAll(Arrays.asList("34360275", "999509300"));
 
 		Endereco enderecoUm = new Endereco(null, "Av. Viconde de Suassun", "874", "Apt. 1102", "Santo Amaro",
@@ -134,7 +138,7 @@ public class DBService {
 				"Boa Viagem", "51050500", clienteUm, cidadeUm);
 
 		Cliente clienteDois = new Cliente(null, "GymFitSmart", "maria.silva@gfsmart.com", "99490136000194",
-				TipoCliente.PESSOAJURIDICA);
+				TipoCliente.PESSOAJURIDICA, pe.encode("123"));
 		Endereco enderecoTres = new Endereco(null, "Rua do teste", "123", "Sem complemento", "Bairro Tal", "12345678",
 				clienteDois, cidadeDois);
 
