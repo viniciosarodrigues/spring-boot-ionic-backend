@@ -116,31 +116,6 @@ public class Pedido implements Serializable {
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Pedido other = (Pedido) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
-
-	@Override
 	public String toString() {
 		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
@@ -150,7 +125,7 @@ public class Pedido implements Serializable {
 		sb.append(", Instante: ");
 		sb.append(sdf.format(getInstante()));
 		sb.append(", Cliente: ");
-		sb.append(getCliente());
+		sb.append(getCliente().getNome());
 		sb.append(", Situação do pagamento: ");
 		sb.append(getPagamento().getEstado().getDescricao());
 		sb.append("\nDetalhes:\n");
