@@ -20,6 +20,7 @@ import com.viniciosrodrigues.cursomc.domain.PagamentoComCartao;
 import com.viniciosrodrigues.cursomc.domain.Pedido;
 import com.viniciosrodrigues.cursomc.domain.Produto;
 import com.viniciosrodrigues.cursomc.domain.enums.EstadoPagamento;
+import com.viniciosrodrigues.cursomc.domain.enums.Perfil;
 import com.viniciosrodrigues.cursomc.domain.enums.TipoCliente;
 import com.viniciosrodrigues.cursomc.repository.CategoriaRepository;
 import com.viniciosrodrigues.cursomc.repository.CidadeRepository;
@@ -131,6 +132,7 @@ public class DBService {
 		Cliente clienteUm = new Cliente(null, "Vinícios Rodrigues", "viniciosarodrigues@gmail.com", "08911768456",
 				TipoCliente.PESSOAFISICA, pe.encode("123"));
 		clienteUm.getTelefones().addAll(Arrays.asList("34360275", "999509300"));
+		clienteUm.addPerfil(Perfil.ADMIN);
 
 		Endereco enderecoUm = new Endereco(null, "Av. Viconde de Suassun", "874", "Apt. 1102", "Santo Amaro",
 				"50050540", clienteUm, cidadeUm);
