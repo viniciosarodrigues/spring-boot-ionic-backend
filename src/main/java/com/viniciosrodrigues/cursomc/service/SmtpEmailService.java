@@ -29,7 +29,7 @@ public class SmtpEmailService extends AbstractEmailService {
 	@Override
 	public void sendHtmlEmail(MimeMessage msg) {
 		LOG.info("Enviando de e-mail...");
-		javaMailSender.send(msg);
+		this.javaMailSender.send(msg);
 		LOG.info("E-mail enviado.");
 	}
 
