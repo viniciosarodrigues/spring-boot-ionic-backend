@@ -5,16 +5,22 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.viniciosrodrigues.cursomc.domain.Cliente;
 import com.viniciosrodrigues.cursomc.domain.ItemPedido;
 import com.viniciosrodrigues.cursomc.domain.PagamentoComBoleto;
 import com.viniciosrodrigues.cursomc.domain.Pedido;
 import com.viniciosrodrigues.cursomc.domain.enums.EstadoPagamento;
+import com.viniciosrodrigues.cursomc.exception.AuthorizationException;
 import com.viniciosrodrigues.cursomc.exception.ObjectNotFoundException;
 import com.viniciosrodrigues.cursomc.repository.ItemPedidoRepository;
 import com.viniciosrodrigues.cursomc.repository.PagamentoRepository;
 import com.viniciosrodrigues.cursomc.repository.PedidoRepository;
+import com.viniciosrodrigues.cursomc.security.UserSS;
 
 /**
  * Camada de serviços responsável pela manutenção dos pedidos
@@ -79,6 +85,16 @@ public class PedidoService {
 		itemPedidoRepository.saveAll(obj.getItens());
 		emailService.sendOrderConfirmationHtmlEmail(obj);
 		return obj;
+	}
+
+	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		UserSS user = UserService.autenticated();
+		if (user == null)
+			throw new AuthorizationException("Acesso negado");
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Cliente cliente = clienteService.findById(user.getId());
+
+		return pedidoRepository.findByCliente(cliente, pageRequest);
 	}
 
 }

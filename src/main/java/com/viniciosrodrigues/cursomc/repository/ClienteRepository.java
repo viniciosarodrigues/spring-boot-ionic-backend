@@ -15,4 +15,5 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 	@Transactional(readOnly = true)
 	public Cliente findByCpfOuCnpj(String cpfOuCnpj);
 
+
 }
