@@ -130,7 +130,7 @@ public class DBService {
 
 		// Cria os Clientes e Endereços dos clientes
 		Cliente clienteUm = new Cliente(null, "Vinícios Rodrigues", "viniciosarodrigues@gmail.com", "08911768456",
-				TipoCliente.PESSOAFISICA, pe.encode("123"));
+				TipoCliente.PESSOAFISICA, pe.encode("123456"));
 		clienteUm.getTelefones().addAll(Arrays.asList("34360275", "999509300"));
 		clienteUm.addPerfil(Perfil.ADMIN);
 
