@@ -15,14 +15,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.viniciosrodrigues.cursomc.domain.Cliente;
 import com.viniciosrodrigues.cursomc.domain.Endereco;
+import com.viniciosrodrigues.cursomc.domain.enums.Perfil;
 import com.viniciosrodrigues.cursomc.domain.enums.TipoCliente;
 import com.viniciosrodrigues.cursomc.dto.ClienteDTO;
 import com.viniciosrodrigues.cursomc.dto.ClienteNewDTO;
+import com.viniciosrodrigues.cursomc.exception.AuthorizationException;
 import com.viniciosrodrigues.cursomc.exception.DataIntegrityException;
 import com.viniciosrodrigues.cursomc.exception.ObjectNotFoundException;
 import com.viniciosrodrigues.cursomc.repository.CidadeRepository;
 import com.viniciosrodrigues.cursomc.repository.ClienteRepository;
 import com.viniciosrodrigues.cursomc.repository.EnderecoRepository;
+import com.viniciosrodrigues.cursomc.security.UserSS;
 
 @Service
 public class ClienteService {
@@ -44,6 +47,10 @@ public class ClienteService {
 	}
 
 	public Cliente findById(Long id) {
+		UserSS user = UserService.autenticated();
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !user.getId().equals(id))
+			throw new AuthorizationException("Acesso negado");
+
 		Optional<Cliente> categoriaSalva = clienteRepository.findById(id);
 		return categoriaSalva.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", tipo: " + Cliente.class.getName()));
