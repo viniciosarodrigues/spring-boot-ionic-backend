@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private static final String[] PUBLIC_MATCHES_GET = { "/produtos/**", "/categorias/**" };
 
-	private static final String[] PUBLIC_MATCHES_POST = { "/clientes/**" };
+	private static final String[] PUBLIC_MATCHES_POST = { "/clientes/**", "/auth/forgot/**" };
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -50,8 +50,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			http.headers().frameOptions().disable();
 
 		http.cors().and().csrf().disable();
-		http.authorizeRequests().antMatchers(HttpMethod.GET, PUBLIC_MATCHES_GET).permitAll().antMatchers(PUBLIC_MATCHES_POST).permitAll().antMatchers(PUBLIC_MATCHES)
-				.permitAll().anyRequest().authenticated();
+		http.authorizeRequests().antMatchers(HttpMethod.GET, PUBLIC_MATCHES_GET).permitAll()
+				.antMatchers(PUBLIC_MATCHES_POST).permitAll().antMatchers(PUBLIC_MATCHES).permitAll().anyRequest()
+				.authenticated();
 		http.addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtUtil));
 		http.addFilter(new JwtAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
