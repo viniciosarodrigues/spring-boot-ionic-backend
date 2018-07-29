@@ -51,8 +51,8 @@ public class ClienteService {
 		if (user == null || !user.hasRole(Perfil.ADMIN) && !user.getId().equals(id))
 			throw new AuthorizationException("Acesso negado");
 
-		Optional<Cliente> categoriaSalva = clienteRepository.findById(id);
-		return categoriaSalva.orElseThrow(() -> new ObjectNotFoundException(
+		Optional<Cliente> clienteSalvo = clienteRepository.findById(id);
+		return clienteSalvo.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", tipo: " + Cliente.class.getName()));
 
 	}
