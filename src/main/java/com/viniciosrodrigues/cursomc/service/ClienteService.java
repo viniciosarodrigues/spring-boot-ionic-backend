@@ -55,6 +55,8 @@ public class ClienteService {
 
 	@Value("${img.prefix.client.profile}")
 	private String prefixImg;
+	@Value("${img.profile.size}")
+	private int imgSize;
 
 	public List<Cliente> getListAll() {
 		return clienteRepository.findAll();
@@ -126,6 +128,8 @@ public class ClienteService {
 			throw new AuthorizationServiceException("Acesso negado");
 
 		BufferedImage jpgImage = imgService.getJpgFromFile(multipartFile);
+		jpgImage = imgService.cropSquare(jpgImage);
+		jpgImage = imgService.resize(jpgImage, imgSize);
 
 		String fileName = prefixImg + user.getId() + ".jpg";
 
