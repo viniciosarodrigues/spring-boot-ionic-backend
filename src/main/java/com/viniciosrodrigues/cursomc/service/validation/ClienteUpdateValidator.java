@@ -49,7 +49,7 @@ public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate
 				.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
 		Long uriId = Long.parseLong(map.get("id"));
 
-		Cliente auxiliar = clienteRepository.findByEmail(value.getEmail());
+		Cliente auxiliar = clienteRepository.findByEmail(value.getEmail()).get();
 
 		if (auxiliar != null && !auxiliar.getId().equals(uriId))
 			list.add(new FieldMessage("email", "Email já cadastrado"));

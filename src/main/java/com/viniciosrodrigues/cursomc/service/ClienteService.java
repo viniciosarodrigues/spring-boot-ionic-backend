@@ -87,6 +87,15 @@ public class ClienteService {
 		return clienteRepository.save(obj);
 	}
 
+	public Cliente getClienteByEmail(String email) {
+		UserSS user = UserService.authenticated();
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !user.getUsername().equals(email))
+			throw new AuthorizationException("Acesso negado");
+
+		return clienteRepository.findByEmail(email).orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Email: " + email + ", tipo: " + Cliente.class.getName()));
+	}
+
 	public void delete(Long id) {
 		try {
 			clienteRepository.deleteById(findById(id).getId());

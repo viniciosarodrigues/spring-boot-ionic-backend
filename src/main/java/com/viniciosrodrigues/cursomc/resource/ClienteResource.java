@@ -45,7 +45,13 @@ public class ClienteResource {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getOne(@PathVariable Long id) {
 		Cliente clienteEncontrado = clienteService.findById(id);
-		return ResponseEntity.status(HttpStatus.OK).body(clienteEncontrado);
+		return ResponseEntity.ok().body(clienteEncontrado);
+	}
+
+	@GetMapping("/email")
+	public ResponseEntity<?> getByEmail(@RequestParam("email") String email) {
+		Cliente clienteEncontrado = clienteService.getClienteByEmail(email);
+		return ResponseEntity.ok().body(clienteEncontrado);
 	}
 
 	@PostMapping
